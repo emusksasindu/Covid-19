@@ -1,12 +1,16 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import NavigationBar from './components/nav.vue';
-import router from './router'; // Import the router from router.js
+import router from './router';
 import store from './store';
+import 'vuetify/dist/vuetify.css';
+import { createVuetify } from 'vuetify';
 
 const app = createApp(App);
 app.use(router);
 app.use(store);
 
-app.component('NavigationBar', NavigationBar); // Register NavigationBar globally
+const vuetify = createVuetify();
+
+app.use(vuetify);
+
 app.mount('#app');

@@ -18,3 +18,5 @@ Route::post('password/reset', [ResetPasswordController::class, 'reset']);
 Route::get('/covid-statistics', [CovidStatisticController::class, 'index']);
 Route::post('/help', [HelpController::class, 'store']);
 Route::get('/help', [HelpController::class, 'index']);
+Route::put('/helps/{id}', [HelpController::class, 'update']); 
+Route::delete('/helps/{id}', [HelpController::class, 'destroy']); 

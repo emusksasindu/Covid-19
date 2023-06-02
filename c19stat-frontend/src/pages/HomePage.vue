@@ -38,6 +38,8 @@
         :text1="`Local: ${latestStatistic.local_deaths || 0}`"
         :text2="`Global: ${latestStatistic.global_deaths || 0}`"
       />
+
+      <RegisterForm/>
     </div>
   </div>
 </template>
@@ -45,10 +47,12 @@
 <script>
 import axios from "axios";
 import GlassmorphismCard from "../components/GlassmorphismCard.vue";
+
 export default {
   name: "HomePage",
   components: {
     GlassmorphismCard,
+   
   },
   data() {
     return {

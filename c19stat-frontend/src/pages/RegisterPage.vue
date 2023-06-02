@@ -27,13 +27,13 @@
       <div class="mt-3">
         <router-link class="btn btn-outline-primary btn-block" to="/login">Login</router-link>
       </div>
+     
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-
 export default {
   name: 'RegisterPage',
   data() {
