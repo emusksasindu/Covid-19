@@ -55,6 +55,7 @@
           this.$store.commit('setUser', response.data.user);
           this.message = response.data.message;
           // You can redirect the user to another page here if needed
+          this.$router.push('/');
         } catch (error) {
           // Login failed
           if (error.response && error.response.data && error.response.data.message) {

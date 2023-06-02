@@ -1,50 +1,55 @@
 <template>
-  <div>
+  <div class="main">
     <h1>Statistics</h1>
     <div class="card-container">
-      <div v-if="latestStatistic" class="card">
-        <div class="card-content">
-          <div class="local-statistics-block">
-            <p class="card-title">Local Statistics</p>
-            <p><i class="fas fa-virus local-icon"></i> Total Confirmed Cases</p>
-            <p class="local-data-value">{{ latestStatistic.local_total_cases || 0 }}</p>
-            <p><i class="fas fa-heartbeat local-icon"></i> Active Cases</p>
-            <p class="local-data-value">{{ latestStatistic.local_active_cases || 0 }}</p>
-            <p><i class="fas fa-chart-line local-icon"></i> Daily New Cases</p>
-            <p class="local-data-value">{{ latestStatistic.local_new_cases || 0 }}</p>
-            <p><i class="fas fa-medkit local-icon"></i> Recovered</p>
-            <p class="local-data-value">{{ latestStatistic.local_recovered || 0 }}</p>
-            <p><i class="fas fa-skull-crossbones local-icon"></i> Deaths</p>
-            <p class="local-data-value">{{ latestStatistic.local_deaths || 0 }}</p>
-          </div>
-        </div>
-      </div>
-      <div v-if="latestStatistic" class="card">
-        <div class="card-content">
-          <div class="global-statistics-block">
-            <p class="card-title">Global Statistics</p>
-            <p><i class="fas fa-globe global-icon"></i> Total Confirmed Cases</p>
-            <p class="global-data-value">{{ latestStatistic.global_total_cases || 0 }}</p>
-            <p><i class="fas fa-heartbeat global-icon"></i> Active Cases</p>
-            <p class="global-data-value">{{ latestStatistic.global_active_cases || 0 }}</p>
-            <p><i class="fas fa-chart-line global-icon"></i> Daily New Cases</p>
-            <p class="global-data-value">{{ latestStatistic.global_new_cases || 0 }}</p>
-            <p><i class="fas fa-medkit global-icon"></i> Recovered</p>
-            <p class="global-data-value">{{ latestStatistic.global_recovered || 0 }}</p>
-            <p><i class="fas fa-skull-crossbones global-icon"></i> Deaths</p>
-            <p class="global-data-value">{{ latestStatistic.global_deaths || 0 }}</p>
-          </div>
-        </div>
-      </div>
+      <GlassmorphismCard
+        v-if="latestStatistic"
+        icon="fas fa-virus"
+        topic="Total Confirmed Cases"
+        :text1="`Local: ${latestStatistic.local_total_cases || 0}`"
+        :text2="`Global: ${latestStatistic.global_total_cases || 0}`"
+      />
+      <GlassmorphismCard
+        v-if="latestStatistic"
+        icon="fas fa-heartbeat"
+        topic="Active Cases"
+        :text1="`Local: ${latestStatistic.local_active_cases || 0}`"
+        :text2="`Global: ${latestStatistic.global_active_cases || 0}`"
+      />
+      <GlassmorphismCard
+        v-if="latestStatistic"
+        icon="fas fa-chart-line"
+        topic="Daily New Cases"
+        :text1="`Local: ${latestStatistic.local_new_cases || 0}`"
+        :text2="`Global: ${latestStatistic.global_new_cases || 0}`"
+      />
+
+      <GlassmorphismCard
+        v-if="latestStatistic"
+        icon="fas fa-medkit"
+        topic="Recovered"
+        :text1="`Local: ${latestStatistic.local_recovered || 0}`"
+        :text2="`Global: ${latestStatistic.global_recovered || 0}`"
+      />
+      <GlassmorphismCard
+        v-if="latestStatistic"
+        icon="fas fa-skull-crossbones"
+        topic=" Deaths"
+        :text1="`Local: ${latestStatistic.local_deaths || 0}`"
+        :text2="`Global: ${latestStatistic.global_deaths || 0}`"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
+import axios from "axios";
+import GlassmorphismCard from "../components/GlassmorphismCard.vue";
 export default {
-  name: 'HomePage',
+  name: "HomePage",
+  components: {
+    GlassmorphismCard,
+  },
   data() {
     return {
       statistics: [],
@@ -57,12 +62,12 @@ export default {
   methods: {
     fetchStatistics() {
       axios
-        .get('http://127.0.0.1:8000/api/covid-statistics')
-        .then(response => {
+        .get("http://127.0.0.1:8000/api/covid-statistics")
+        .then((response) => {
           this.statistics = response.data;
           this.latestStatistic = this.getLatestStatistic();
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     },
@@ -77,6 +82,10 @@ export default {
 </script>
 
 <style scoped>
+.main{
+  background: url("https://rare-gallery.com/thumbnail/1338831-WhiteAbstract-Hexagon-4k-Ultra-HD-Wallpaper.png");
+  padding-bottom: 3.5rem;
+}
 h1 {
   font-size: 4rem;
   text-align: center;
@@ -86,10 +95,20 @@ h1 {
 }
 
 .card-container {
+  margin-top: 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  justify-items: center;
+  gap: 10px;
+  row-gap: 6rem;
+  
+}
+
+.single-card {
+  grid-column: 1 / span 2;
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 2rem;
 }
 
 .card {
@@ -113,51 +132,5 @@ h1 {
   font-weight: bold;
   font-size: 3rem;
   margin-bottom: 10px;
-}
-
-.local-statistics-block {
-  font-size: 20px;
-}
-
-.local-statistics-block p {
-  display: flex;
-  align-items: center;
-  margin: 5px 0;
-}
-
-.local-icon {
-  margin-right: 10px;
-  font-size: 3rem;
-  color: rgb(255, 0, 106);
-}
-
-
-
-.global-statistics-block {
-  font-size: 20px;
-}
-
-.global-statistics-block p {
-  display: flex;
-  align-items: center;
-  margin: 5px 0;
-}
-
-.global-icon {
-  margin-right: 10px;
-  font-size: 3rem;
-  color: rgb(0, 255, 251);
-}
-
-.local-data-value,
-.global-data-value {
-  color: rgb(255, 255, 255);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  background: rgb(120, 117, 117);
-  border: 1px solid rgb(255, 255, 255);
-  border-radius: 0.8rem;
 }
 </style>

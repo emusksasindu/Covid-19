@@ -17,6 +17,7 @@ class CreateHelpTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->string('image')->nullable(); // Add the image column
             $table->timestamps();
         });
     }
